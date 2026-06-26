@@ -20,12 +20,14 @@ jobs:
       - name: Extract Project ZIP
         run: |
           unzip adblock_vpn_backup.zip
-          cd adblock-vpn
-          chmod +x gradlew
+          # Give execution permissions to any gradlew wrapper found anywhere in the extracted content
+          find . -name "gradlew" -exec chmod +x {} +
 
       - name: Build with Gradle
         run: |
-          cd adblock-vpn
+          # Find the directory containing the actual settings.gradle or build.gradle and build from there
+          PROJECT_DIR=$(find . -name "settings.gradle" -o -name "build.gradle" | head -n 1 | xargs dirname)
+          cd "$PROJECT_DIR"
           ./gradlew assembleDebug
 
       - name: Upload APK Artifact
