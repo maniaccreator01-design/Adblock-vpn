@@ -20,12 +20,12 @@ jobs:
       - name: Extract Project ZIP
         run: |
           unzip adblock_vpn_backup.zip
-          cd adblock_vpn_backup || cd adblock_vpn* || cd *
+          cd adblock-vpn
           chmod +x gradlew
 
       - name: Build with Gradle
         run: |
-          cd adblock_vpn_backup || cd adblock_vpn* || cd *
+          cd adblock-vpn
           ./gradlew assembleDebug
 
       - name: Upload APK Artifact
