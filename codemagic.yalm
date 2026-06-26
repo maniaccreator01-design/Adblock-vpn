@@ -1,0 +1,15 @@
+workflows:
+  android-workflow:
+    name: Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    scripts:
+      - name: Extract Project
+        script: |
+          unzip adblock_vpn_backup.zip
+      - name: Build Android APK
+        script: |
+          cd adblock_vpn_backup || cd adblock_vpn *
+          ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/apk/**/*.apk
